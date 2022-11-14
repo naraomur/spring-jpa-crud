@@ -1,8 +1,13 @@
 package com.springjpacrud01.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+
+/**
+ * Class employee is dependent on Department class.
+ */
 
 @Entity
 @Table(name = "employees")
@@ -10,23 +15,34 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "name")
+    @NotNull
     private String name;
+
     @Column(name = "position")
+    @NotNull
     private String position;
 
+    //responsible for serialization
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
+
+//    not correct
+//    @ManyToOne
+//    @JoinColumn(name = "department_id", referencedColumnName = "id")
+//    private Department department;
+
+    public Employee() {
+
+    }
 
     public Employee(Long id, String name, String position) {
         this.id = id;
         this.name = name;
         this.position = position;
-    }
-
-    public Employee() {
-
     }
 
     public Long getId() {
@@ -60,4 +76,6 @@ public class Employee {
     public void setDepartment(Department department) {
         this.department = department;
     }
+
+
 }

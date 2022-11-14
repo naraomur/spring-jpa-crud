@@ -9,27 +9,26 @@ import java.util.Optional;
 
 @Service
 public class EmployeeService {
-
     private final EmployeeRepository employeeRepository;
-
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 
     //read
-   public List<Employee> getAllEmployees() {
+    public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
-    }
-
-   public List<Employee> getAllEmployeesByDepartmentId(Long departmentId) {
-        return employeeRepository.findAllByDepartmentId(departmentId);
     }
 
     public Optional<Employee> findById(Long id) {
         return employeeRepository.findById(id);
     }
-    public Employee editEmployees(Employee employee) {
+
+    public Employee saveEmployees(Employee employee) {
         return employeeRepository.saveAndFlush(employee);
+    }
+
+    public List<Employee> getAllEmployeesByDepartmentId(Long departmentId) {
+        return employeeRepository.findAllByDepartmentId(departmentId);
     }
 
     public void deleteEmployees(Long id) {
