@@ -1,6 +1,5 @@
 package com.springjpacrud01.controller.ecxeption;
 
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -11,39 +10,42 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 import java.util.NoSuchElementException;
-import java.util.ResourceBundle;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice()
 public class ResponseExceptions extends ResponseEntityExceptionHandler {
     private Response response;
-    private Translator translator = new Translator();
-    private String lang;
+    private final Translator translator = new Translator();
+    private String msg;
+    private Locale locale;
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<Object> handleNoSuchElement(HttpServletRequest req) {
         response = new Response(HttpStatus.NOT_FOUND);
-        Locale locale = req.getLocale();
-        lang = translator.getMsg(locale.getLanguage());
-        //lang = translator.getMsg("ru");
-        response.setMsg(req.getRequestURI() + " with " + req.getQueryString() + lang);
+        locale = req.getLocale();
+        msg = translator.getStringNotFound(locale.getLanguage(), req.getRequestURI(), req.getQueryString());
+        //msg = translator.getStringNotFound("en", req.getRequestURI(), req.getQueryString());
+        response.setMsg(msg);
         return buildResponse(response);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<Object> handleTypeMismatch(HttpServletRequest req, MethodArgumentTypeMismatchException mex){
+    public ResponseEntity<Object> handleTypeMismatch(HttpServletRequest req){
         response = new Response(HttpStatus.OK);
-        response.setMsg("Could not convert " + req.getQueryString() + " to required type 'number': 1, 2, 3...");
+        msg = translator.getStringMistype(locale.getLanguage(), req.getQueryString());
+        //msg = translator.getStringMistype("en", req.getQueryString());
+        response.setMsg(msg);
         return buildResponse(response);
     }
 
     @ExceptionHandler(NullPointerException.class)
-    public ResponseEntity<Object> handleNullPointer(HttpServletRequest req, NullPointerException nex){
+    public ResponseEntity<Object> handleNullPointer(HttpServletRequest req){
         response = new Response(HttpStatus.OK);
-        response.setMsg("Entry can't be "+req.getQueryString()+ ". Enter valid key of type number for ID: 1, 2, 3...");
-
+        locale = req.getLocale();
+        msg = translator.getStringMistype(locale.getLanguage(), req.getQueryString());
+        //msg = translator.getStringNullPointer("en", req.getQueryString());
+        response.setMsg(msg);
         return buildResponse(response);
     }
 
