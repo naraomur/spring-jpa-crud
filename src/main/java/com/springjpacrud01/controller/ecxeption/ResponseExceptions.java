@@ -1,5 +1,6 @@
 package com.springjpacrud01.controller.ecxeption;
 
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -10,15 +11,24 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.util.Locale;
 import java.util.NoSuchElementException;
+import java.util.ResourceBundle;
+
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice()
 public class ResponseExceptions extends ResponseEntityExceptionHandler {
     private Response response;
+    private Translator translator = new Translator();
+    private String lang;
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<Object> handleNoSuchElement(HttpServletRequest req, NoSuchElementException e){
+    public ResponseEntity<Object> handleNoSuchElement(HttpServletRequest req) {
         response = new Response(HttpStatus.NOT_FOUND);
-        response.setMsg(req.getRequestURI() + " with " + req.getQueryString() + " not found!");
+        Locale locale = req.getLocale();
+        lang = translator.getMsg(locale.getLanguage());
+        //lang = translator.getMsg("ru");
+        response.setMsg(req.getRequestURI() + " with " + req.getQueryString() + lang);
         return buildResponse(response);
     }
 
@@ -33,6 +43,7 @@ public class ResponseExceptions extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleNullPointer(HttpServletRequest req, NullPointerException nex){
         response = new Response(HttpStatus.OK);
         response.setMsg("Entry can't be "+req.getQueryString()+ ". Enter valid key of type number for ID: 1, 2, 3...");
+
         return buildResponse(response);
     }
 
