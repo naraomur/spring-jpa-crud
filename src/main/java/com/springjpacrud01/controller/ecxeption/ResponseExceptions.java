@@ -43,7 +43,7 @@ public class ResponseExceptions extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleNullPointer(HttpServletRequest req){
         response = new Response(HttpStatus.OK);
         locale = req.getLocale();
-        msg = translator.getStringMistype(locale.getLanguage(), req.getQueryString());
+        msg = translator.getStringNullPointer(locale.getLanguage(), req.getQueryString());
         //msg = translator.getStringNullPointer("en", req.getQueryString());
         response.setMsg(msg);
         return buildResponse(response);

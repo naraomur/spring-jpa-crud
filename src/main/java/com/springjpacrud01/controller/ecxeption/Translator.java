@@ -12,9 +12,9 @@ public class Translator {
     private static ResourceBundle resourceBundle;
     private String text;
     public String getStringNotFound(String language, String requestURI, String queryString) {
-        resourceBundle = ResourceBundle.getBundle("texts");
+        resourceBundle = ResourceBundle.getBundle("notfound");
             if(resourceBundle.containsKey(language)){
-                resourceBundle = ResourceBundle.getBundle("texts_"+language);
+                resourceBundle = ResourceBundle.getBundle("notfound_"+language);
             text = resourceBundle.getString(language);
             if(language.equals("ru") || language.equals("ky")){
                 text = new String(text.getBytes(StandardCharsets.UTF_8));
