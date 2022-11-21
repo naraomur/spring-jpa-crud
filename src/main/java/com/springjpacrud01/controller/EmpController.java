@@ -39,6 +39,9 @@ public class EmpController {
 
     @RequestMapping("/dep-employees")
     public List<Employee> retrieveEmpFromDep(@RequestParam("id") Long id){
+        if(id <= 0 || departmentService.findById(id).isEmpty()) {
+            throw new NoSuchElementException();
+        }
         return employeeService.getAllEmployeesByDepartmentId(id);
     }
 

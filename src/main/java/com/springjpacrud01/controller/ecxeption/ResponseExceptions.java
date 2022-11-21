@@ -22,10 +22,10 @@ public class ResponseExceptions extends ResponseEntityExceptionHandler {
     private Locale locale;
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<Object> handleNoSuchElement(HttpServletRequest req) {
-        response = new Response(HttpStatus.NOT_FOUND);
+        response = new Response(HttpStatus.OK);
         locale = req.getLocale();
-        msg = translator.getStringNotFound(locale.getLanguage(), req.getRequestURI(), req.getQueryString());
-        //msg = translator.getStringNotFound("en", req.getRequestURI(), req.getQueryString());
+        //msg = translator.getStringNotFound(locale.getLanguage(), req.getRequestURI(), req.getQueryString());
+        msg = translator.getStringNotFound("ky", req.getRequestURI(), req.getQueryString());
         response.setMsg(msg);
         return buildResponse(response);
     }
@@ -33,8 +33,8 @@ public class ResponseExceptions extends ResponseEntityExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<Object> handleTypeMismatch(HttpServletRequest req){
         response = new Response(HttpStatus.OK);
-        msg = translator.getStringMistype(locale.getLanguage(), req.getQueryString());
-        //msg = translator.getStringMistype("en", req.getQueryString());
+        //msg = translator.getStringMistype(locale.getLanguage(), req.getQueryString());
+        msg = translator.getStringMistype("ky", req.getQueryString());
         response.setMsg(msg);
         return buildResponse(response);
     }
@@ -43,8 +43,8 @@ public class ResponseExceptions extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleNullPointer(HttpServletRequest req){
         response = new Response(HttpStatus.OK);
         locale = req.getLocale();
-        msg = translator.getStringNullPointer(locale.getLanguage(), req.getQueryString());
-        //msg = translator.getStringNullPointer("en", req.getQueryString());
+        //msg = translator.getStringNullPointer(locale.getLanguage(), req.getQueryString());
+        msg = translator.getStringNullPointer("ky", req.getQueryString());
         response.setMsg(msg);
         return buildResponse(response);
     }

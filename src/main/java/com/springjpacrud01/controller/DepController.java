@@ -27,7 +27,7 @@ public class  DepController {
         return departments;
     }
 
-    @RequestMapping(value = "/id", method = RequestMethod.GET, params = "id")
+    @RequestMapping(value = "/id", method = RequestMethod.GET)
     public ResponseEntity<Department> getById(@RequestParam("id") Long id){
         //System.out.println("\033[0;33m" + "-----" + departmentService.findById(id).get().getEmployeeHashSet().size() + "-----" + "\033[0m");
         Optional<Department> department = departmentService.findById(id);
