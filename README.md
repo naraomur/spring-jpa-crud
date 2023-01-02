@@ -5,7 +5,7 @@
 - Requirements for installation
 - Getting Started
 - Project Structure
-- Models
+- Models and DB
 - API calls
 - Advanced call
 - Exceptions
