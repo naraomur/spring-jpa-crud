@@ -24,8 +24,8 @@ public class ResponseExceptions extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleNoSuchElement(HttpServletRequest req) {
         response = new Response(HttpStatus.OK);
         locale = req.getLocale();
-        //msg = translator.getStringNotFound(locale.getLanguage(), req.getRequestURI(), req.getQueryString());
-        msg = translator.getStringNotFound("ky", req.getRequestURI(), req.getQueryString());
+        msg = translator.getStringNotFound(locale.getLanguage(), req.getRequestURI(), req.getQueryString());
+        //msg = translator.getStringNotFound("ru", req.getRequestURI(), req.getQueryString());
         response.setMsg(msg);
         return buildResponse(response);
     }
@@ -33,8 +33,7 @@ public class ResponseExceptions extends ResponseEntityExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<Object> handleTypeMismatch(HttpServletRequest req){
         response = new Response(HttpStatus.OK);
-        //msg = translator.getStringMistype(locale.getLanguage(), req.getQueryString());
-        msg = translator.getStringMistype("ky", req.getQueryString());
+        msg = translator.getStringMistype("ru", req.getQueryString());
         response.setMsg(msg);
         return buildResponse(response);
     }
@@ -44,7 +43,7 @@ public class ResponseExceptions extends ResponseEntityExceptionHandler {
         response = new Response(HttpStatus.OK);
         locale = req.getLocale();
         //msg = translator.getStringNullPointer(locale.getLanguage(), req.getQueryString());
-        msg = translator.getStringNullPointer("ky", req.getQueryString());
+        msg = translator.getStringNullPointer("ru", req.getQueryString());
         response.setMsg(msg);
         return buildResponse(response);
     }
